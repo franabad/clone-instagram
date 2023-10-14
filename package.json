@@ -2,6 +2,7 @@
   "name": "clone-instagram",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,6 +12,7 @@
   "dependencies": {
     "next": "13.5.4",
     "react": "^18",
+    "react-audio-player": "^0.17.0",
     "react-dom": "^18"
   },
   "devDependencies": {
