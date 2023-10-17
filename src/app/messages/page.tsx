@@ -1,7 +1,9 @@
-import Layout from '../page'
+import Aside from '../components/Aside'
 
 export default function Messages () {
   return (
-    <Layout />
+    <main>
+      <Aside />
+    </main>
   )
 }
