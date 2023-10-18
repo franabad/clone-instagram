@@ -1,6 +1,6 @@
 export const FeedProfile = async ({ username = 'franabad' }: any) => {
-  // const resPosts = await fetch(`http://localhost:3001/feed/${username}`)
-  // const posts = await resPosts.json()
+  const resPosts = await fetch(`http://localhost:3001/feed/${username}`)
+  const posts = await resPosts.json()
 
   const resUser = await fetch(`http://localhost:3001/users/${username}`)
   const data = await resUser.json()
@@ -34,12 +34,12 @@ export const FeedProfile = async ({ username = 'franabad' }: any) => {
           <p className="text-sm text-gray-500">{user.name} {user.lastname}</p>
         </header>
       </div>
-      {/* {posts.map((posts: any) => (
+      {posts.map((posts: any) => (
           <div key={posts.post_id}>
             <img width={320} src={posts.url} alt='Prueba' />
             <h2>{posts.caption}</h2>
           </div>
-      ))} */}
+      ))}
     </div>
   )
 }
