@@ -24,7 +24,7 @@ export default function Aside (username: any) {
           </li>
           <li>
             <Link href='#'>
-              <Search/>
+              <Search />
             </Link>
           </li>
           <li>

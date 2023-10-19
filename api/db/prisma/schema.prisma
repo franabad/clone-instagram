@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model following {
+  id_follower                         String   @db.Uuid
+  id_following                        String   @db.Uuid
+  created_at                          DateTime @default(now()) @db.Timestamptz(6)
+  users_following_id_followerTousers  users    @relation("following_id_followerTousers", fields: [id_follower], references: [id], onDelete: Cascade)
+  users_following_id_followingTousers users    @relation("following_id_followingTousers", fields: [id_following], references: [id], onDelete: Cascade)
+
+  @@id([id_follower, id_following])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model posts {
+  post_id                      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  caption                      String?
+  n_likes                      Int      @default(0) @db.SmallInt
+  liked_by                     String?  @db.Uuid
+  n_comments                   Int?     @db.SmallInt
+  comments                     String?
+  created_at                   DateTime @default(now()) @db.Timestamptz(6)
+  url                          String[]
+  upload_by                    String   @db.Uuid
+  users_posts_liked_byTousers  users?   @relation("posts_liked_byTousers", fields: [liked_by], references: [id], onDelete: Cascade)
+  users_posts_upload_byTousers users    @relation("posts_upload_byTousers", fields: [upload_by], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model users {
+  id                                      String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username                                String      @unique @db.VarChar
+  email                                   String      @unique @db.VarChar
+  name                                    String      @db.VarChar
+  lastname                                String?     @db.VarChar
+  n_posts                                 Int         @default(0) @db.SmallInt
+  n_followers                             Int         @default(0) @db.SmallInt
+  n_following                             Int         @default(0) @db.SmallInt
+  created_at                              DateTime    @default(now()) @db.Timestamp(6)
+  avatar_url                              String      @default("https://wsxpfzeomqgngmwlrdbf.supabase.co/storage/v1/object/sign/profile_pictures/no%20profile.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9maWxlX3BpY3R1cmVzL25vIHByb2ZpbGUuanBnIiwiaWF0IjoxNjk3NTgyNTgzLCJleHAiOjE3MjkxMTg1ODN9.H73oqer-e65Ggk_lXDYqoDeGOCheui6_Rk58bNTnGuw&t=2023-10-17T22%3A42%3A56.132Z")
+  bio                                     String      @default("")
+  following_following_id_followerTousers  following[] @relation("following_id_followerTousers")
+  following_following_id_followingTousers following[] @relation("following_id_followingTousers")
+  posts_posts_liked_byTousers             posts[]     @relation("posts_liked_byTousers")
+  posts_posts_upload_byTousers            posts[]     @relation("posts_upload_byTousers")
+}

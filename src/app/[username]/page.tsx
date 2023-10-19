@@ -2,7 +2,8 @@ import React from 'react'
 import Aside from '../components/Aside'
 import { FeedProfile } from '../components/FeedProfile'
 
-const Profile = async ({ username }: any) => {
+const Profile = async ({ params }: any) => {
+  const { username } = params
   return (
     <main className='flex flex-row'>
       <Aside />

@@ -1,22 +1,15 @@
-export const FeedProfile = async ({ username = 'franabad' }: any) => {
-  const resPosts = await fetch(`http://localhost:3001/feed/${username}`)
-  const posts = await resPosts.json()
+import { notFound } from 'next/navigation'
 
+export const FeedProfile = async ({ username }: any) => {
   const resUser = await fetch(`http://localhost:3001/users/${username}`)
   const data = await resUser.json()
+  const [user] = data
 
-  const user = {
-    username: data[0].username,
-    name: data[0].name,
-    lastname: data[0].lastname,
-    n_posts: data[0].n_posts,
-    n_followers: data[0].n_followers,
-    n_following: data[0].n_following,
-    avatar_url: data[0].avatar_url,
-    bio: data[0].bio
-  }
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+  if (!user) notFound()
 
-  console.log(user)
+  const resPosts = await fetch(`http://localhost:3001/feed/${username}`)
+  const posts = await resPosts.json()
 
   return (
     <div className="flex flex-col gap-5 items-center h-full">
@@ -24,7 +17,7 @@ export const FeedProfile = async ({ username = 'franabad' }: any) => {
         <header className="w-full flex flex-row h-[237px] mb-11">
           <div className="mr-[30px] items-center relative">
             <div className="block self-center relative">
-              <canvas className="rounded-full" width="168" height="168" style={{ left: '-9px', position: 'absolute', top: '-9px', height: '168px', width: '168px' }}></canvas>
+              {/* <canvas className="rounded-full left-[-9px] absolute top-[-9px] h-[168px] w-[168px]" width="168" height="168"></canvas> */}
               <span className="h-[150px] w-[150px] box-border overflow-x-hidden block overflow-y-hidden">
                 <img src={user.avatar_url} alt={'Foto de perfil de' + user.username} className="rounded-full object-cover" draggable="false" ></img>
               </span>

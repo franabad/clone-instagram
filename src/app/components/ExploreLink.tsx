@@ -1,5 +1,4 @@
 'use client'
-
 import { usePathname } from 'next/navigation'
 import { ExploreIcon } from '@/icons/ExploreIcon'
 import { ExploreIconTransp } from '@/icons/ExploreIconTransp'
