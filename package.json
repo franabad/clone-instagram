@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node ./api/index.js",
     "lint": "next lint",
     "db": "node ./api/db/db.js",
     "api": "node --watch ./api/index.js"
