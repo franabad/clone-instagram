@@ -1,12 +1,10 @@
 import { notFound } from 'next/navigation'
 
 export const FeedProfile = async ({ username }: any) => {
-  const resUser = await fetch(`http://localhost:3001/users/${username}`)
-  const data = await resUser.json()
-  const [user] = data
+  const res = await fetch(`http://localhost:3001/users/${username}`)
+  const data = await res.json()
 
-  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-  if (!user) notFound()
+  if (!data) notFound()
 
   const resPosts = await fetch(`http://localhost:3001/feed/${username}`)
   const posts = await resPosts.json()
@@ -19,12 +17,12 @@ export const FeedProfile = async ({ username }: any) => {
             <div className="block self-center relative">
               {/* <canvas className="rounded-full left-[-9px] absolute top-[-9px] h-[168px] w-[168px]" width="168" height="168"></canvas> */}
               <span className="h-[150px] w-[150px] box-border overflow-x-hidden block overflow-y-hidden">
-                <img src={user.avatar_url} alt={'Foto de perfil de' + user.username} className="rounded-full object-cover" draggable="false" ></img>
+                <img src={data.avatar_url} alt={'Foto de perfil de' + data.username} className="rounded-full object-cover" draggable="false" ></img>
               </span>
             </div>
           </div>
-          <h2 className="text-2xl font-bold">{user.username}</h2>
-          <p className="text-sm text-gray-500">{user.name} {user.lastname}</p>
+          <h2 className="text-2xl font-bold">{data.username}</h2>
+          <p className="text-sm text-gray-500">{data.name} {data.lastname}</p>
         </header>
       </div>
       {posts.map((posts: any) => (
