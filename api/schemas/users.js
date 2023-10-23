@@ -22,6 +22,6 @@ export function validateUser (object) {
   return userSchema.safeParse(object)
 }
 
-export function validateModifyMovie (object) {
+export function validateModifyUser (object) {
   return userSchema.partial().safeParse(object)
 }
